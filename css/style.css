@@ -1,5 +1,11 @@
 body {
   font-family: 'Courier New', Courier, monospace;
+  box-sizing: border-box;
+}
+
+div {
+  /* border: 4px solid gold;
+  padding: 20px; */
 }
 
 h1 {
