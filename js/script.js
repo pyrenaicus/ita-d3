@@ -10,4 +10,9 @@ const restar = (num1, num2) => {
 
 restar(2, 3);
 
-document.querySelector('div').innerHTML = "<p>vengo de JS</p>";
+// document.querySelector('div').innerHTML = "<p>vengo de JS</p>";
+
+d3.select("div")
+  .append("h2")
+  .text("Soy un elemento de D3")
+
