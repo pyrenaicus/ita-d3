@@ -1,27 +1,62 @@
-const dades = [8, 15, 34, 22, 38];
-const colors = ['plum', 'tomato', 'lightgreen', 'hotpink', 'blue'];
+let dades = [8, 15, 34, 22, 38, 18]
+let colors = ['darkgreen', 'purple', 'darkblue', 'orange', 'darkred', 'steelblue']
 // variables dels rectangles
-const ample = 50;
-const sep = 5;
-const marge = 100;
-const multAlt = 4;
+let ample = 50
+let sep = 5
+let marge = 20
+let multAlt = 4
+let IdDiv = '#chart-1'
+let ampleGrafic = dades.length * (ample + sep) + marge * 2
+let altGrafic = multAlt * Math.max(...dades) + marge * 2
+let sepText = 5
 
-// creem el conteniodr gràfic
-const svg = d3.select('#chart').append('svg').attr('width', 400).attr('height', 400);
+// gràfic 1
+graficBarres(dades, colors, ample, sep, marge, multAlt, IdDiv)
 
-// seleccionem tots els rectangles que crearem
-const rectangles = svg.selectAll('rect');
+// gràfic 2
+dades = [28, 35, 14, 65, 38, 18]
+ample = 50
+sep = 5
+marge = 20
+multAlt = 4
+IdDiv = '#chart-2'
+ampleGrafic = dades.length * (ample + sep) + marge * 2
+altGrafic = multAlt * Math.max(...dades) + marge * 2
+graficBarres(dades, colors, ample, sep, marge, multAlt, IdDiv)
 
-rectangles
-  .data(dades)
-  .enter()
-  .append('rect')
-  .attr('width', 50)
-  .attr('height', (d, i) => {
-    console.log("d: ", d, "i: ", i);
-    return d * multAlt;
-  })
-  .attr('x', (_, i) => marge + i * (ample + sep))
-  .attr('y', (d) => marge + multAlt * Math.max(...dades) - d * multAlt)
-  // .attr('fill', 'plum')
-  .attr('fill', (_, i) => colors[i]);
+function graficBarres(dades, colors, ample, sep, marge, multAlt, idDiv) {
+  // creem el conteniodr gràfic
+  let svg = d3.select(idDiv)
+    .append('svg')
+    .attr('width', ampleGrafic)
+    .attr('height', altGrafic)
+
+  // seleccionem tots els rectangles que crearem
+  let rectangles = svg.selectAll('rect')
+
+  rectangles
+    .data(dades)
+    .enter()
+    .append('rect')
+    .attr('width', 50)
+    .attr('height', (d, i) => {
+      console.log("d: ", d, "i: ", i)
+      return d * multAlt
+    })
+    .attr('x', (d, i) => marge + i * (ample + sep))
+    .attr('y', (d) => marge + multAlt * Math.max(...dades) - d * multAlt)
+    // .attr('fill', 'plum')
+    .attr('fill', (_, i) => colors[i])
+
+  let text = svg.selectAll('text')
+
+  text
+    .data(dades)
+    .enter()
+    .append('text')
+    .attr('x', (d, i) => marge + i * (ample + sep) + ample / 2)
+    .attr('y', (d, i) => marge + multAlt * Math.max(...dades) - d * multAlt - sepText)
+    .attr('text-anchor', 'middle')
+    .text((d) => d)
+
+}
